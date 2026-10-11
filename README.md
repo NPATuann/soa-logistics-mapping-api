@@ -1,7 +1,7 @@
 # SOA Logistics & Mapping Proxy Service
 
 **Course:** KTHDV (Service-Oriented Architecture) - Seminar Project  
-**Group:** 10  
+**Group:** 12  
 **Group Code:** SOA.26-12  
 
 This repository contains a Node.js/Express proxy microservice dedicated to handling location data, geocoding, and mapping intelligence via the Google Places API (routed through RapidAPI). It is designed to act as an independent middleware node in a Service-Oriented Architecture (SOA), completely decoupling external API interactions and credential management from frontend client applications.
