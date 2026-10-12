@@ -153,7 +153,7 @@ app.get('/api/details', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`✅ Backend Server (RapidAPI Version) is running at: http://localhost:${PORT}`);
-    console.log(`👉 Test Route 1: http://localhost:${PORT}/api/search?query=Dai+Hoc+Ton+Duc+Thang`);
-    console.log(`👉 Test Route 2: http://localhost:${PORT}/api/nearby`);
+    console.log(`Backend Server (RapidAPI Version) is running at: http://localhost:${PORT}`);
+    console.log(`Test Route 1: http://localhost:${PORT}/api/search?query=Dai+Hoc+Ton+Duc+Thang`);
+    console.log(`Test Route 2: http://localhost:${PORT}/api/nearby`);
 });
