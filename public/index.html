@@ -3,97 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SOA Seminar - Google Places API Demo</title>
+  <title>Location Search & Mapping Services - Google Places API</title>
+  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <nav class="navbar navbar-dark mb-4">
-    <div class="container d-flex justify-content-between align-items-center">
-      <span class="navbar-brand mb-0 h1 fw-bold">📍 SOA Seminar - Google Places API</span>
-      <span class="badge" id="modeBadge">Initializing...</span>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom-nav sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+        <span class="brand-icon"><i class="bi bi-geo-alt-fill"></i></span>
+        <span>GeoPlaces <span class="badge bg-light text-primary fs-8">SOA API</span></span>
+      </a>
+      <div class="d-flex align-items-center gap-3 text-light small">
+        <span><i class="bi bi-cpu-fill text-warning"></i> RapidAPI Gateway</span>
+        <span><i class="bi bi-shield-check text-success"></i> Active</span>
+      </div>
     </div>
   </nav>
 
-  <div class="container mb-5">
-    <div class="text-center mb-4">
-      <h3 class="fw-bold text-dark">Location Lookup & Tracking System</h3>
-      <p class="text-muted small">Logistics & Mapping Services - Group 3 (Khang, Tuan, Alex)</p>
+  <!-- Hero Section -->
+  <section class="hero-section py-4">
+    <div class="container text-center">
+      <h2 class="fw-bold hero-title mb-2">Location Intelligence & Mapping Hub</h2>
+      <p class="hero-subtitle mb-4 text-secondary mx-auto">Explore places, calculate proximity distances, and extract real-time business insights seamlessly.</p>
+      
+      <!-- Stats Highlights -->
+      <div class="row g-3 justify-content-center max-w-stats mx-auto">
+        <div class="col-4 col-md-3">
+          <div class="stat-box p-2 rounded shadow-2xs">
+            <h5 class="fw-bold mb-0 text-primary">RESTful</h5>
+            <small class="text-muted fs-8">Architecture</small>
+          </div>
+        </div>
+        <div class="col-4 col-md-3">
+          <div class="stat-box p-2 rounded shadow-2xs">
+            <h5 class="fw-bold mb-0 text-success">Haversine</h5>
+            <small class="text-muted fs-8">Real-time Dist</small>
+          </div>
+        </div>
+        <div class="col-4 col-md-3">
+          <div class="stat-box p-2 rounded shadow-2xs">
+            <h5 class="fw-bold mb-0 text-info">Place API</h5>
+            <small class="text-muted fs-8">New Version</small>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <ul class="nav nav-tabs mb-4 justify-content-center" id="apiTab" role="tablist">
-      <li class="nav-item">
-        <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search-pane">
-          🔍 1. Place Search
+  <!-- Main Work Area -->
+  <main class="container my-4">
+    
+    <!-- Functional Navigation Tabs -->
+    <ul class="nav nav-pills custom-pills nav-fill mb-4 shadow-sm" id="featureTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active fw-semibold" id="search-tab" data-bs-toggle="tab" data-bs-target="#search-pane" type="button" role="tab">
+          <i class="bi bi-search me-1"></i> 1. Place Search
         </button>
       </li>
-      <li class="nav-item">
-        <button class="nav-link" id="nearby-tab" data-bs-toggle="tab" data-bs-target="#nearby-pane">
-          📍 2. Nearby Locations
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-semibold" id="nearby-tab" data-bs-toggle="tab" data-bs-target="#nearby-pane" type="button" role="tab">
+          <i class="bi bi-pin-map-fill me-1"></i> 2. Nearby Locations
         </button>
       </li>
-      <li class="nav-item">
-        <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane">
-          ℹ️ 3. Business Information
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-semibold" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane" type="button" role="tab">
+          <i class="bi bi-info-circle-fill me-1"></i> 3. Business Details
         </button>
       </li>
     </ul>
 
-    <div class="tab-content">
-      <div class="tab-pane fade show active" id="search-pane">
-        <div class="card p-3 mb-4">
-          <form id="formSearch" class="row g-2">
-            <div class="col-md-10">
-              <input type="text" class="form-control" id="searchQuery" placeholder="Enter search keyword (e.g., Ton Duc Thang University, District 7 Restaurants)..." required>
+    <!-- Tab Contents Container -->
+    <div class="tab-content" id="featureTabContent">
+
+      <!-- ================= 1. TAB: PLACE SEARCH ================= -->
+      <div class="tab-pane fade show active" id="search-pane" role="tabpanel">
+        <div class="row g-4">
+          <!-- Control Column -->
+          <div class="col-lg-4">
+            <div class="card panel-card p-3 shadow-sm border-0">
+              <h6 class="fw-bold text-dark mb-3"><i class="bi bi-funnel-fill text-primary me-2"></i>Search Filter</h6>
+              <form id="formSearch">
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Keywords or Landmarks</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="searchQuery" placeholder="e.g. Ton Duc Thang University..." required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 fw-semibold mb-3">
+                  <i class="bi bi-lightning-charge-fill me-1"></i> Search Places
+                </button>
+              </form>
+
+              <!-- Quick Recommendations -->
+              <div class="quick-tags-section pt-2 border-top">
+                <small class="text-muted fw-bold d-block mb-2">QUICK SUGGESTIONS</small>
+                <div class="d-flex flex-wrap gap-1">
+                  <button type="button" class="btn btn-light btn-sm tag-chip" onclick="quickFillSearch('Ton Duc Thang University')">ĐH Tôn Đức Thắng</button>
+                  <button type="button" class="btn btn-light btn-sm tag-chip" onclick="quickFillSearch('Ben Thanh Market')">Chợ Bến Thành</button>
+                  <button type="button" class="btn btn-light btn-sm tag-chip" onclick="quickFillSearch('Landmark 81')">Landmark 81</button>
+                  <button type="button" class="btn btn-light btn-sm tag-chip" onclick="quickFillSearch('SC VivoCity')">SC VivoCity</button>
+                </div>
+              </div>
             </div>
-            <div class="col-md-2">
-              <button type="submit" class="btn btn-primary w-100 fw-semibold">Search</button>
+          </div>
+
+          <!-- Result Column -->
+          <div class="col-lg-8">
+            <div id="searchResults" class="row g-3">
+              <!-- Initial Placeholder -->
+              <div class="col-12 text-center py-5 empty-placeholder rounded shadow-2xs">
+                <i class="bi bi-map display-4 text-muted mb-3 d-block"></i>
+                <h5 class="fw-bold text-secondary">Ready to Search</h5>
+                <p class="text-muted small mb-0">Enter a keyword or click on quick suggestions to query places.</p>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
-        <div id="searchResults" class="row g-3"></div>
       </div>
 
-      <div class="tab-pane fade" id="nearby-pane">
-        <div class="card p-3 mb-4">
-          <form id="formNearby" class="row g-2">
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Landmark (Location Name / Address)</label>
-              <input type="text" class="form-control" id="nearbyLocationName" placeholder="e.g., Ben Thanh Market, Landmark 81, TDTU..." value="Ton Duc Thang University" required>
+      <!-- ================= 2. TAB: NEARBY LOCATIONS ================= -->
+      <div class="tab-pane fade" id="nearby-pane" role="tabpanel">
+        <div class="row g-4">
+          <!-- Filter Controller -->
+          <div class="col-lg-4">
+            <div class="card panel-card p-3 shadow-sm border-0">
+              <h6 class="fw-bold text-dark mb-3"><i class="bi bi-compass-fill text-success me-2"></i>Proximity Radar</h6>
+              <form id="formNearby">
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Center Landmark</label>
+                  <input type="text" class="form-control" id="nearbyLocationName" value="Ton Duc Thang University" required>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <label class="form-label small fw-semibold">Radius (m)</label>
+                    <input type="number" class="form-control" id="nearbyRadius" value="1000" min="100" max="50000" required>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label small fw-semibold">Category Type</label>
+                    <input type="text" class="form-control" id="nearbyType" value="cafe">
+                  </div>
+                </div>
+
+                <!-- Fast Category Selector -->
+                <div class="mb-3">
+                  <label class="form-label fs-8 text-muted fw-bold d-block mb-1">FAST PRESETS</label>
+                  <div class="d-flex flex-wrap gap-1">
+                    <span class="badge category-pill" onclick="setNearbyType('cafe')">☕ Cafe</span>
+                    <span class="badge category-pill" onclick="setNearbyType('restaurant')">🍜 Restaurant</span>
+                    <span class="badge category-pill" onclick="setNearbyType('bank')">🏦 Bank</span>
+                    <span class="badge category-pill" onclick="setNearbyType('supermarket')">🛒 Supermarket</span>
+                    <span class="badge category-pill" onclick="setNearbyType('hospital')">🏥 Hospital</span>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 fw-semibold">
+                  <i class="bi bi-broadcast-pin me-1"></i> Scan Proximity
+                </button>
+              </form>
             </div>
-            <div class="col-md-3">
-              <label class="form-label small fw-bold">Radius (Meters)</label>
-              <input type="number" class="form-control" id="nearbyRadius" value="1000" min="100" max="50000" required>
+          </div>
+
+          <!-- Nearby Cards Stream -->
+          <div class="col-lg-8">
+            <div id="nearbyResults" class="row g-3">
+              <!-- Initial Placeholder -->
+              <div class="col-12 text-center py-5 empty-placeholder rounded shadow-2xs">
+                <i class="bi bi-radar display-4 text-muted mb-3 d-block"></i>
+                <h5 class="fw-bold text-secondary">Proximity Radar Idle</h5>
+                <p class="text-muted small mb-0">Configure center anchor and category to scan surrounding entities.</p>
+              </div>
             </div>
-            <div class="col-md-3">
-              <label class="form-label small fw-bold">Location Type</label>
-              <input type="text" class="form-control" id="nearbyType" placeholder="e.g., cafe, restaurant, bank" value="cafe">
-            </div>
-            <div class="col-12 mt-2">
-              <button type="submit" class="btn btn-success w-100 fw-semibold">Scan Nearby Locations</button>
-            </div>
-          </form>
+          </div>
         </div>
-        <div id="nearbyResults" class="row g-3"></div>
       </div>
 
-      <div class="tab-pane fade" id="details-pane">
-        <div class="card p-3 mb-4">
-          <form id="formDetails" class="row g-2">
-            <div class="col-md-10">
-              <input type="text" class="form-control font-monospace" id="detailsPlaceId" placeholder="Enter Place ID..." required>
+      <!-- ================= 3. TAB: BUSINESS DETAILS ================= -->
+      <div class="tab-pane fade" id="details-pane" role="tabpanel">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="card panel-card p-3 shadow-sm border-0">
+              <h6 class="fw-bold text-dark mb-3"><i class="bi bi-file-earmark-person-fill text-info me-2"></i>Inspect Entity</h6>
+              <form id="formDetails">
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Google Place ID</label>
+                  <textarea class="form-control" id="detailsPlaceId" rows="3" placeholder="Enter Place ID..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-info text-white w-100 fw-semibold">
+                  <i class="bi bi-box-arrow-in-right me-1"></i> Fetch Detailed Profile
+                </button>
+              </form>
             </div>
-            <div class="col-md-2">
-              <button type="submit" class="btn btn-info text-white w-100 fw-semibold">Get Details</button>
+          </div>
+
+          <div class="col-lg-8">
+            <div id="detailsResult">
+              <div class="text-center py-5 empty-placeholder rounded shadow-2xs">
+                <i class="bi bi-building-check display-4 text-muted mb-3 d-block"></i>
+                <h5 class="fw-bold text-secondary">No Business Selected</h5>
+                <p class="text-muted small mb-0">Select "View Details" from previous cards or paste an ID above.</p>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
-        <div id="detailsResult"></div>
       </div>
+
     </div>
-  </div>
+  </main>
 
+  <!-- Quick helper function triggers -->
+  <script>
+    function quickFillSearch(val) {
+      document.getElementById('searchQuery').value = val;
+      document.getElementById('formSearch').dispatchEvent(new Event('submit'));
+    }
+    function setNearbyType(type) {
+      document.getElementById('nearbyType').value = type;
+    }
+  </script>
+
+  <!-- Bootstrap Bundle & Logic -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="app.js"></script>
 </body>
